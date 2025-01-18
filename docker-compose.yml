@@ -26,8 +26,6 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "letsencrypt:/letsencrypt"
-    networks:
-      - web
     restart: unless-stopped
 
   broker:
@@ -66,8 +64,6 @@ services:
       PAPERLESS_TIKA_ENABLED: 1
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
-    networks:
-      - web
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.paperless.rule=Host(`paperless.da-maltsev.ru`)"
@@ -86,10 +82,6 @@ services:
   tika:
     image: docker.io/apache/tika:latest
     restart: unless-stopped
-
-networks:
-  web:
-    driver: bridge
 
 volumes:
   data:
